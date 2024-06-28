@@ -1,0 +1,64 @@
+!---input file for PSWQM (modified ICM) linkage to PSFVM (FVCOM) ---
+!   comments start with exclamation !
+!
+!   Each section is grouped in a ($NAMELIST  $end) pair
+!
+
+$hydro_netcdf
+
+     !netcdf file names are made up by hydro_dir+hydro_prefix+filenumber+hydro_suffix, where filenumber occupies hydro_filenumwidth characters
+     !                                                                                 and  it starts with hydro_filenumstart
+
+     !hydro_dir='/pic/projects/salish_sea/Tarang/SSM_2014/HYD/SSM_2014__DFO_mc_0.65alb_tsobc300m/model_output/netcdf_coldstart/'
+     !hydro_dir='/pic/projects/salish_sea/Tarang/SSM_2014/HYD/SSM_2014__DFO_mc_0.65alb_tsobc300m/model_output/3600s_solution/netcdf_hotstart_3600s/'
+     !hydro_dir='/pic/projects/salish_sea/Tarang/SSM_2014/HYD/SSM_2014__DFO_mc_0.65alb_tsobc200m/model_output/netcdf/'
+
+     hydro_dir='/rcfs/projects/ssm_ofs/Tarang/SSM_v27_Baseline_2013-2021/SSM_2020/HYD/SSM_2020_286_Riv_0.60alb_z0_0.24_NB_SJI_JS/model_output/netcdf/'
+
+
+
+                                                              !directory name where the fvcom, note that have to have '/' at the end
+                                                              !if the files are in current dir, simply put './' for unix/linux platform
+     hydro_prefix='ssm_'                                      !prefix part of the file name
+     hydro_suffix='.nc'                                       !extension name
+     hydro_filenumwidth = 5                                   !number of digits in file number following hydro_prefix
+     hydro_filenumstart= 1                                    !number in first netcdf input file
+     hydro_Nrec   = 24                                        !number of records in each netcdf file
+     hydro_dlt    = 3600.0                                     !time step of hydrodynamics (Unit: seconds)
+
+           !The above setup gives clue to the following FVCOM field history output filenames 
+           !
+           !     /home/long075/work/Puget_Sound_2.0/WQ_PS2.0_Hyd_Run9_01/Run_April_30_MD_BND/input-netcdf/psm_0001.nc 
+           !     /home/long075/work/Puget_Sound_2.0/WQ_PS2.0_Hyd_Run9_01/Run_April_30_MD_BND/input-netcdf/psm_0002.nc
+           !      ...
+           !that the model will look for to read in. 
+
+$end
+
+$wqm_history
+    HIS_OUTDIR='./outputs/'                                   !extension name
+    HISFN = 'outputs/ssm_history.out'                         !history output file name
+    t_his_start = 0.0                                         !starting time in history output (days)
+    t_his_end   = 0.0                                       !ending time in history output (days)
+    t_his_dlt   = 0.25  !6 hr !0.041666667         ! hourly     !interval of history output (days)
+    HISFN_SPLIT_BYLEVEL= .TRUE.                               !Split history fields into files level by level
+$end
+
+$wqm_stations
+
+    STNFN       = 'outputs/ssm_station.out'                  !station output file name (including path if any, length must not exceed 1024 characters)
+
+    Nstation    = 26                                         !total number of stations (must be less than NstationMax set in mod_var.F and greater than 1)
+
+    NstationNum_GL = 6151, 7786, 11793, 4040, 5112, 5308, 6231, 9516, 9323, 9887
+                     9683, 10746, 12166, 13789, 13264, 14271, 14885, 15199, 15490, 11959
+                     7796, 15903, 15967, 1424, 7294, 40
+                                                             !node numbers in fvcom model grid for outputing station timeseries
+                                                             !number of entries here should be equal to Nstation (must not exceed maximum node number and
+                                                             !be greater than 0)
+    t_stn_start = 0.0                                        !starting time in station output (days)
+    t_stn_end   = 365.0                                      !ending time in station output (days)
+    t_stn_dlt   = 0.25      !0.25 for 6 hr interval !  0.041666667 for 1 hr interval   !interval of station output (days)
+
+$end
+

@@ -1,0 +1,25 @@
+!wet and dry for WQ
+WET_DRY_ON = F
+MIN_DEPTH = 0.5
+
+!====VARIABLES CONTROLLING NETCDF OUTPUT========================================
+CDF_OUT = T 
+!
+!CDF_INT = 10 !time step interval of netcdf files = DTExIsplit*CDF_INT=2x5x10=100 seconds
+!CDF_STK = 72 !save 72 time step solutions = 7200 = 2 hrs in each netcdf file
+!
+!CDF_INT= 3600  !time step interval in each netcdf file = DTE*ISPLIT*CDF_INT=0.2*5*3600=3600 (sec), one record every 1 hr 
+!CDF_STK= 24    !save 24 timestep solutions in each netcdf file = 24x3600 = 1 day
+!
+CDF_INT= 90    !time step interval in each netcdf file = DTE*ISPLIT*CDF_INT=40*90=3600 (sec), one record every 1 hr 
+CDF_STK= 24    !save 24 timestep solutions in each netcdf file = 24x3600 = 1 day
+!
+!CDF_INT= 360    !time step interval in each netcdf file = DTE*ISPLIT*CDF_INT=10*360=3600 (sec), one record every 1 hr 
+!CDF_STK= 24    !save 24 timestep solutions in each netcdf file = 24x3600 = 1 day
+!
+
+CDF_VDP = el salt temp d CCHL1  DOXG LDOC RDOC LPOC RPOC  B1 B2 NH4\\
+  NO3 LDON RDON LPON RPON PO4 TDIC TALK pH pCO2 IAVG\\
+  TSS SSI KESS TURB PARAD LEAF STEM ROOT TUBER EP SZ LZ\\
+  GPP NPP
+ 
